@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-label="品牌主視覺">
+  <defs>
+    <linearGradient id="hb" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#EBDACB"/><stop offset=".55" stop-color="#F7EFE7"/><stop offset="1" stop-color="#DCC3AE"/>
+    </linearGradient>
+    <linearGradient id="hbox" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#F1E5DA"/>
+    </linearGradient>
+    <filter id="hs" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="30" stdDeviation="30" flood-color="#6B4F3C" flood-opacity=".28"/>
+    </filter>
+  </defs>
+  <rect width="800" height="1000" fill="url(#hb)"/>
+  <circle cx="140" cy="180" r="150" fill="#FFFFFF" opacity=".4"/>
+  <circle cx="690" cy="840" r="200" fill="#C9A98F" opacity=".33"/>
+  <path d="M0 700c180-70 320 40 500-20s220-80 300-120v440H0z" fill="#FFFFFF" opacity=".28"/>
+  <g filter="url(#hs)" transform="rotate(-5 400 500)">
+    <rect x="256" y="272" width="292" height="404" rx="14" fill="url(#hbox)"/>
+    <rect x="256" y="272" width="292" height="84" rx="14" fill="#B4614A"/>
+    <rect x="256" y="342" width="292" height="14" fill="#B4614A"/>
+    <text x="402" y="326" font-family="Georgia,serif" font-size="29" letter-spacing="9" fill="#FFF7F2" text-anchor="middle">AURA</text>
+    <circle cx="402" cy="478" r="70" fill="none" stroke="#B4614A" stroke-width="2.5" opacity=".5"/>
+    <path d="M402 430c25 21 38 38 38 57a38 38 0 1 1-76 0c0-19 13-36 38-57z" fill="#B4614A" opacity=".78"/>
+    <text x="402" y="594" font-family="Georgia,serif" font-size="26" letter-spacing="4" fill="#3A302A" text-anchor="middle">玻尿酸修護面膜</text>
+    <text x="402" y="628" font-family="Helvetica,Arial,sans-serif" font-size="13" letter-spacing="4" fill="#8B7A6D" text-anchor="middle">HYALURONIC REPAIR MASK</text>
+  </g>
+  <g transform="translate(600 300)" opacity=".8">
+    <path d="M0 0c-26 8-50 4-66-14 22-20 48-24 72-12z" fill="#8FA382"/>
+    <path d="M-12 -14C-18 12-36 30-60 34c2-26 20-46 48-48z" fill="#7E9370"/>
+  </g>
+</svg>

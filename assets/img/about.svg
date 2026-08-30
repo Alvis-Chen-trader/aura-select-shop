@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 800" role="img" aria-label="選品理念情境">
+  <defs>
+    <linearGradient id="ab" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F6EDE4"/><stop offset="1" stop-color="#DFCBB8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1000" height="800" fill="url(#ab)"/>
+  <circle cx="820" cy="180" r="140" fill="#FFFFFF" opacity=".42"/>
+  <rect x="120" y="220" width="300" height="420" rx="16" fill="#FFFFFF" opacity=".9" transform="rotate(-6 270 430)"/>
+  <rect x="120" y="220" width="300" height="84" rx="16" fill="#B4614A" transform="rotate(-6 270 430)"/>
+  <rect x="470" y="270" width="270" height="360" rx="14" fill="#F0E5DA" transform="rotate(4 605 450)"/>
+  <circle cx="700" cy="540" r="120" fill="#C9A98F" opacity=".4"/>
+  <g transform="translate(770 620)" opacity=".85">
+    <path d="M0 0c-30 10-58 4-76-16 26-22 56-28 84-14z" fill="#8FA382"/>
+    <path d="M-14 -16C-22 14-42 36-70 40c2-30 22-52 56-56z" fill="#7E9370"/>
+  </g>
+  <text x="500" y="740" font-family="Georgia,serif" font-size="26" letter-spacing="8" fill="#7A5C48" text-anchor="middle">用過才敢推薦</text>
+</svg>

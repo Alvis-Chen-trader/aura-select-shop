@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="精華液質地特寫">
+  <defs>
+    <radialGradient id="drop" cx=".35" cy=".3" r=".8">
+      <stop offset="0" stop-color="#FFFFFF"/><stop offset=".5" stop-color="#F2E7DD"/><stop offset="1" stop-color="#DCC7B5"/>
+    </radialGradient>
+    <linearGradient id="bg3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F9F1EA"/><stop offset="1" stop-color="#E4D2C3"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="800" fill="url(#bg3)"/>
+  <g opacity=".9">
+    <circle cx="400" cy="400" r="215" fill="url(#drop)"/>
+    <circle cx="400" cy="400" r="215" fill="none" stroke="#FFFFFF" stroke-width="3" opacity=".7"/>
+    <circle cx="332" cy="330" r="46" fill="#FFFFFF" opacity=".75"/>
+    <circle cx="470" cy="470" r="26" fill="#FFFFFF" opacity=".45"/>
+  </g>
+  <circle cx="188" cy="238" r="54" fill="#FFFFFF" opacity=".5"/>
+  <circle cx="640" cy="596" r="72" fill="#FFFFFF" opacity=".4"/>
+  <circle cx="622" cy="216" r="30" fill="#FFFFFF" opacity=".55"/>
+  <text x="400" y="720" font-family="Georgia,serif" font-size="24" letter-spacing="7" fill="#8B6B57" text-anchor="middle">精華液 · 質地</text>
+</svg>

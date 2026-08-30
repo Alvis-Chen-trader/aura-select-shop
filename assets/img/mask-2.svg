@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="面膜單片鋁袋">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#EFE3DA"/><stop offset="1" stop-color="#FAF3ED"/>
+    </linearGradient>
+    <linearGradient id="foil" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#E7E2DC"/><stop offset=".35" stop-color="#FFFFFF"/>
+      <stop offset=".62" stop-color="#DED6CE"/><stop offset="1" stop-color="#F2ECE6"/>
+    </linearGradient>
+    <filter id="sh2" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#7A5B47" flood-opacity=".25"/>
+    </filter>
+  </defs>
+  <rect width="800" height="800" fill="url(#bg2)"/>
+  <ellipse cx="400" cy="640" rx="250" ry="40" fill="#D6BEAC" opacity=".35"/>
+  <g filter="url(#sh2)" transform="rotate(-7 400 400)">
+    <rect x="252" y="180" width="296" height="404" rx="8" fill="url(#foil)"/>
+    <path d="M252 180h296v26H252z" fill="#CFC6BE"/>
+    <path d="M252 558h296v26H252z" fill="#CFC6BE"/>
+    <text x="400" y="300" font-family="Georgia,serif" font-size="26" letter-spacing="8" fill="#B4614A" text-anchor="middle">AURA</text>
+    <line x1="316" y1="322" x2="484" y2="322" stroke="#C9B6A7" stroke-width="1.5"/>
+    <text x="400" y="376" font-family="Georgia,serif" font-size="25" fill="#453A33" text-anchor="middle">玻尿酸修護面膜</text>
+    <text x="400" y="408" font-family="Helvetica,Arial,sans-serif" font-size="12.5" letter-spacing="3" fill="#8F8077" text-anchor="middle">DEEP MOISTURE · 25ml</text>
+    <rect x="330" y="446" width="140" height="1.5" fill="#DCD2CA"/>
+    <text x="400" y="492" font-family="Helvetica,Arial,sans-serif" font-size="11.5" letter-spacing="2" fill="#A2938A" text-anchor="middle">MADE IN TAIWAN</text>
+  </g>
+</svg>
