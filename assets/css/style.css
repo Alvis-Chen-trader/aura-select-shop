@@ -4,33 +4,41 @@
    ============================================================ */
 
 /* ---------- 1. Design tokens ---------- */
+/* 色票取自參考站 thisjulie.com：純白底、階層灰字（#444 為主文字，
+   不是純黑）、克制的金棕 #AD8349 只用在文字與細節，特價紅 #BA372A。
+   要換品牌色改 --brand 那三行即可。 */
 :root {
-  /* 品牌色：暖米白 + 陶土橘。想換品牌色改這三行就好 */
-  --brand:        #B4614A;
-  --brand-deep:   #8E4735;
-  --brand-soft:   #F3E4DC;
+  --brand:        #AD8349;   /* 金棕：價格、eyebrow、連結、細線強調 */
+  --brand-deep:   #8E6A38;
+  --brand-soft:   #F6F0E7;
 
-  --paper:        #FBF7F2;
+  --paper:        #FFFFFF;
   --surface:      #FFFFFF;
-  --surface-2:    #F5EFE7;
-  --ink:          #241F1B;
-  --ink-2:        #6B6158;
-  --ink-3:        #9A8E82;
-  --line:         #E7DED3;
-  --line-strong:  #D6C8B8;
-  --sale:         #A8442F;
-  --ok:           #3F6B4E;
+  --surface-2:    #F7F6F4;
+  --ink:          #444444;
+  --ink-2:        #6C6C6C;
+  --ink-3:        #9C9C9C;
+  --line:         #E6E6E6;
+  --line-strong:  #CFCBC5;
+  --sale:         #BA372A;   /* 特價文字 */
+  --sale-bg:      #BA372A;   /* 特價標籤底 */
+  --sale-fg:      #FFFFFF;
+  --bar-bg:       #444444;   /* 公告列與頁尾：兩個主題都保持深色 */
+  --bar-fg:       #FFFFFF;
+  --ok:           #4A6B52;
 
-  --shadow-sm: 0 1px 2px rgba(36, 31, 27, .06);
-  --shadow-md: 0 6px 24px -8px rgba(36, 31, 27, .18);
-  --shadow-lg: 0 24px 60px -24px rgba(36, 31, 27, .30);
+  --shadow-sm: 0 1px 2px rgba(68, 68, 68, .07);
+  --shadow-md: 0 4px 20px -6px rgba(68, 68, 68, .16);
+  --shadow-lg: 0 18px 48px -20px rgba(68, 68, 68, .26);
 
-  --r-sm: 6px;
-  --r-md: 12px;
-  --r-lg: 20px;
+  /* 參考站的圓角很克制：5px / 10px，只有標籤是膠囊 */
+  --r-sm: 5px;
+  --r-md: 10px;
+  --r-lg: 10px;
   --r-full: 999px;
 
-  --serif: "Noto Serif TC", "Songti TC", "Georgia", serif;
+  /* Unna 是參考站用的襯線體（僅拉丁字），中文自動落到 Noto Serif TC */
+  --serif: "Unna", "Noto Serif TC", "Songti TC", Georgia, serif;
   --sans: "Noto Sans TC", -apple-system, BlinkMacSystemFont, "Segoe UI",
           "PingFang TC", "Microsoft JhengHei", sans-serif;
 
@@ -43,42 +51,50 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --brand:       #E08A6C;
-    --brand-deep:  #F0A98D;
-    --brand-soft:  #33251F;
-    --paper:       #16130F;
-    --surface:     #1F1B16;
-    --surface-2:   #262119;
-    --ink:         #F2ECE4;
-    --ink-2:       #B8ABA0;
-    --ink-3:       #8A7E74;
-    --line:        #342C24;
-    --line-strong: #4A3F35;
-    --sale:        #E88A72;
-    --ok:          #7FB08F;
+    --brand:       #C9A063;
+    --brand-deep:  #DDB87E;
+    --brand-soft:  #2A241B;
+    --paper:       #141312;
+    --surface:     #1C1B19;
+    --surface-2:   #232120;
+    --ink:         #EDEAE5;
+    --ink-2:       #ADA79F;
+    --ink-3:       #837D75;
+    --line:        #2E2C29;
+    --line-strong: #423F3A;
+    --sale:        #E8917F;
+    --sale-bg:     #8E2E22;
+    --sale-fg:     #FFF3F0;
+    --bar-bg:      #232120;
+    --bar-fg:      #EDEAE5;
+    --ok:          #7FA189;
     --shadow-sm: 0 1px 2px rgba(0,0,0,.4);
-    --shadow-md: 0 6px 24px -8px rgba(0,0,0,.6);
-    --shadow-lg: 0 24px 60px -24px rgba(0,0,0,.7);
+    --shadow-md: 0 4px 20px -6px rgba(0,0,0,.6);
+    --shadow-lg: 0 18px 48px -20px rgba(0,0,0,.7);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --brand:       #E08A6C;
-  --brand-deep:  #F0A98D;
-  --brand-soft:  #33251F;
-  --paper:       #16130F;
-  --surface:     #1F1B16;
-  --surface-2:   #262119;
-  --ink:         #F2ECE4;
-  --ink-2:       #B8ABA0;
-  --ink-3:       #8A7E74;
-  --line:        #342C24;
-  --line-strong: #4A3F35;
-  --sale:        #E88A72;
-  --ok:          #7FB08F;
+  --brand:       #C9A063;
+  --brand-deep:  #DDB87E;
+  --brand-soft:  #2A241B;
+  --paper:       #141312;
+  --surface:     #1C1B19;
+  --surface-2:   #232120;
+  --ink:         #EDEAE5;
+  --ink-2:       #ADA79F;
+  --ink-3:       #837D75;
+  --line:        #2E2C29;
+  --line-strong: #423F3A;
+  --sale:        #E8917F;
+  --sale-bg:     #8E2E22;
+  --sale-fg:     #FFF3F0;
+  --bar-bg:      #232120;
+  --bar-fg:      #EDEAE5;
+  --ok:          #7FA189;
   --shadow-sm: 0 1px 2px rgba(0,0,0,.4);
-  --shadow-md: 0 6px 24px -8px rgba(0,0,0,.6);
-  --shadow-lg: 0 24px 60px -24px rgba(0,0,0,.7);
+  --shadow-md: 0 4px 20px -6px rgba(0,0,0,.6);
+  --shadow-lg: 0 18px 48px -20px rgba(0,0,0,.7);
   color-scheme: dark;
 }
 
@@ -90,8 +106,8 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--sans);
-  font-size: 15px;
-  line-height: 1.75;
+  font-size: 14px;
+  line-height: 1.8;
   letter-spacing: .01em;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -109,30 +125,28 @@ p { margin: 0 0 1em; }
 
 /* ---------- 3. Typography helpers ---------- */
 .eyebrow {
-  font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+  font-size: 10.5px; letter-spacing: .26em; text-transform: uppercase;
   color: var(--brand); font-weight: 700; margin-bottom: 10px;
 }
-.display { font-size: clamp(30px, 5.4vw, 52px); letter-spacing: .03em; }
-.h2 { font-size: clamp(22px, 3.2vw, 32px); }
-.h3 { font-size: clamp(17px, 2.2vw, 21px); }
-.lede { color: var(--ink-2); font-size: clamp(14px, 1.6vw, 16px); }
+.display { font-size: clamp(27px, 4.4vw, 42px); letter-spacing: .04em; }
+.h2 { font-size: clamp(20px, 2.6vw, 28px); }
+.h3 { font-size: clamp(16px, 1.9vw, 19px); }
+.lede { color: var(--ink-2); font-size: clamp(13.5px, 1.4vw, 15px); }
 .muted { color: var(--ink-2); }
 .tiny { font-size: 12px; color: var(--ink-3); }
 
 /* ---------- 4. Buttons ---------- */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  padding: 13px 26px; border-radius: var(--r-full); border: 1px solid transparent;
-  font-size: 14px; font-weight: 600; letter-spacing: .06em;
+  padding: 13px 26px; border-radius: var(--r-sm); border: 1px solid transparent;
+  font-size: 13.5px; font-weight: 600; letter-spacing: .1em;
   transition: transform .15s ease, background .2s ease, border-color .2s ease, opacity .2s;
   text-align: center; white-space: nowrap;
 }
 .btn:active { transform: translateY(1px); }
-.btn--primary { background: var(--brand); color: #fff; }
-.btn--primary:hover { background: var(--brand-deep); }
-:root[data-theme="dark"] .btn--primary,
-:root:not([data-theme="light"]) .btn--primary { color: #1A120E; }
-@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .btn--primary { color:#fff; } }
+/* 主鈕用墨色。金棕在參考站幾乎只當文字色，大面積鋪開會俗氣。 */
+.btn--primary { background: var(--ink); color: var(--paper); }
+.btn--primary:hover { background: var(--brand-deep); color: #fff; }
 .btn--ghost { border-color: var(--line-strong); color: var(--ink); background: transparent; }
 .btn--ghost:hover { border-color: var(--brand); color: var(--brand); }
 .btn--block { display: flex; width: 100%; }
@@ -141,8 +155,8 @@ p { margin: 0 0 1em; }
 
 /* ---------- 5. Header ---------- */
 .announce {
-  background: var(--ink); color: var(--paper);
-  font-size: 12px; letter-spacing: .1em; text-align: center; padding: 9px 16px;
+  background: var(--bar-bg); color: var(--bar-fg);
+  font-size: 11.5px; letter-spacing: .12em; text-align: center; padding: 9px 16px;
 }
 .hdr {
   position: sticky; top: 0; z-index: 50;
@@ -166,7 +180,7 @@ p { margin: 0 0 1em; }
 .icon-btn:hover { background: var(--surface-2); }
 .cart-dot {
   position: absolute; top: 4px; right: 3px; min-width: 17px; height: 17px; padding: 0 4px;
-  background: var(--brand); color: #fff; border-radius: var(--r-full);
+  background: var(--ink); color: var(--paper); border-radius: var(--r-full);
   font-size: 10px; font-weight: 700; display: grid; place-items: center; line-height: 1;
 }
 .burger { display: none; }
@@ -227,16 +241,16 @@ p { margin: 0 0 1em; }
 .card__cat { font-size: 11px; letter-spacing: .16em; color: var(--ink-3); text-transform: uppercase; }
 .card__name { font-family: var(--serif); font-size: 15px; line-height: 1.5; }
 .card__price { margin-top: auto; padding-top: 8px; display: flex; align-items: baseline; gap: 8px; }
-.price { font-weight: 700; font-size: 16px; letter-spacing: .02em; }
+.price { font-weight: 700; font-size: 15px; letter-spacing: .02em; color: var(--brand); }
 .price--sale { color: var(--sale); }
 .price--was { font-size: 12px; color: var(--ink-3); text-decoration: line-through; font-weight: 400; }
 .tag {
   position: absolute; left: 10px; top: 10px; z-index: 2;
-  background: var(--brand); color: #fff; font-size: 11px; font-weight: 700;
-  letter-spacing: .08em; padding: 4px 10px; border-radius: var(--r-full);
+  background: var(--ink); color: var(--paper); font-size: 10.5px; font-weight: 700;
+  letter-spacing: .1em; padding: 4px 10px; border-radius: var(--r-sm);
 }
 .tag--soon { background: var(--ink-2); }
-.tag--sale { background: var(--sale); }
+.tag--sale { background: var(--sale-bg); color: var(--sale-fg); }
 
 /* ---------- 9. Product detail ---------- */
 .pdp { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(24px, 4.5vw, 56px); padding: 28px 0 clamp(40px,6vw,72px); }
@@ -367,7 +381,7 @@ p { margin: 0 0 1em; }
 /* ---------- 13. Toast ---------- */
 .toast {
   position: fixed; left: 50%; bottom: 26px; transform: translate(-50%, 140%);
-  background: var(--ink); color: var(--paper); padding: 13px 22px; border-radius: var(--r-full);
+  background: var(--bar-bg); color: var(--bar-fg); padding: 13px 22px; border-radius: var(--r-sm);
   font-size: 13.5px; z-index: 200; box-shadow: var(--shadow-lg);
   transition: transform .35s cubic-bezier(.2,.9,.3,1.2); max-width: calc(100vw - 32px);
 }
@@ -392,21 +406,51 @@ p { margin: 0 0 1em; }
 .prose li { margin-bottom: 7px; }
 
 /* ---------- 15. Footer ---------- */
-.ftr { background: var(--ink); color: var(--paper); padding: clamp(36px,5vw,60px) 0 26px; margin-top: 40px; }
-.ftr a { color: color-mix(in srgb, var(--paper) 72%, transparent); font-size: 13.5px; }
-.ftr a:hover { color: var(--paper); }
+.ftr { background: var(--bar-bg); color: var(--bar-fg); padding: clamp(36px,5vw,60px) 0 26px; margin-top: 40px; }
+.ftr a { color: color-mix(in srgb, var(--bar-fg) 72%, transparent); font-size: 13.5px; }
+.ftr a:hover { color: var(--bar-fg); }
 .ftr__grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: clamp(20px,3vw,40px); }
 @media (max-width: 780px) { .ftr__grid { grid-template-columns: 1fr 1fr; } }
-.ftr h4 { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; margin-bottom: 14px; color: color-mix(in srgb, var(--paper) 60%, transparent); font-family: var(--sans); font-weight: 700; }
+.ftr h4 { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; margin-bottom: 14px; color: color-mix(in srgb, var(--bar-fg) 60%, transparent); font-family: var(--sans); font-weight: 700; }
 .ftr ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 9px; }
-.ftr__brand p { color: color-mix(in srgb, var(--paper) 65%, transparent); font-size: 13.5px; max-width: 34ch; }
+.ftr__brand p { color: color-mix(in srgb, var(--bar-fg) 65%, transparent); font-size: 13.5px; max-width: 34ch; }
 .ftr__bottom {
-  border-top: 1px solid color-mix(in srgb, var(--paper) 16%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--bar-fg) 16%, transparent);
   margin-top: 34px; padding-top: 18px; display: flex; justify-content: space-between;
-  gap: 14px; flex-wrap: wrap; font-size: 12px; color: color-mix(in srgb, var(--paper) 55%, transparent);
+  gap: 14px; flex-wrap: wrap; font-size: 12px; color: color-mix(in srgb, var(--bar-fg) 55%, transparent);
 }
 
 /* ---------- 16. Motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
+
+/* ---------- 17. 手機版底部購買列（借自 shop.quanteel.com） ---------- */
+.buybar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+  display: none; gap: 12px; align-items: center;
+  padding: 10px var(--gut) calc(10px + env(safe-area-inset-bottom, 0px));
+  background: color-mix(in srgb, var(--paper) 94%, transparent);
+  backdrop-filter: saturate(1.3) blur(12px);
+  border-top: 1px solid var(--line);
+  transform: translateY(115%); transition: transform .3s cubic-bezier(.4,0,.2,1);
+}
+.buybar.is-on { transform: none; }
+.buybar__price { flex: none; line-height: 1.35; }
+.buybar__price small { display: block; font-size: 11px; color: var(--ink-3); }
+.buybar__price b { font-family: var(--serif); font-size: 17px; color: var(--brand); }
+.buybar .btn { flex: 1; padding-inline: 16px; }
+@media (max-width: 880px) { .buybar { display: flex; } }
+
+/* ---------- 18. 回到頂部 ---------- */
+.totop {
+  position: fixed; right: 16px; bottom: 18px; z-index: 55;
+  width: 42px; height: 42px; border-radius: 50%; padding: 0;
+  background: var(--surface); border: 1px solid var(--line-strong); color: var(--ink-2);
+  display: grid; place-items: center; box-shadow: var(--shadow-md);
+  opacity: 0; pointer-events: none; transform: translateY(8px);
+  transition: opacity .25s ease, transform .25s ease, color .2s;
+}
+.totop:hover { color: var(--brand); border-color: var(--brand); }
+.totop.is-on { opacity: 1; pointer-events: auto; transform: none; }
+@media (max-width: 880px) { .totop { bottom: 88px; } }

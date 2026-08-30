@@ -48,7 +48,7 @@ if (process.argv.includes('--artifact')) {
   const body = html.match(/<body[^>]*>([\s\S]*)<\/body>/)[1];
   const art =
     '<title>AURA 選物</title>\n' +
-    '<style>\n@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600&display=swap");\n' +
+    '<style>\n@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;600&family=Unna:wght@400;700&display=swap");\n' +
     css + '\n</style>\n' + body.trim() + '\n';
   fs.writeFileSync(path.join(root, 'dist/artifact.html'), art);
   console.log('✓ dist/artifact.html   (' + (Buffer.byteLength(art) / 1024).toFixed(0) + ' KB)');

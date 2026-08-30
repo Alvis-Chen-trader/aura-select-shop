@@ -169,6 +169,19 @@ function bindProduct(id) {
   });
   app.querySelector('#buyNow')?.addEventListener('click', () => { add(); location.hash = '#/checkout'; });
 
+  // 手機底部購買列：捲過主要購買區之後才出現
+  const bar = app.querySelector('#buybar');
+  const box = app.querySelector('.buybox');
+  if (bar && box) {
+    app.querySelectorAll('#variantOpts button').forEach(b =>
+      b.addEventListener('click', () => { bar.querySelector('#buybarPrice').textContent = fmt(b.dataset.price); }));
+    bar.querySelector('#buybarAdd').addEventListener('click', () => { add(); toast(`已加入購物車：${p.name}`); });
+    const io = new IntersectionObserver(
+      ([e]) => bar.classList.toggle('is-on', !e.isIntersecting && e.boundingClientRect.top < 0),
+      { threshold: 0 });
+    io.observe(box);
+  }
+
   // 分頁籤
   app.querySelectorAll('#pdpTabs button').forEach(b => {
     b.addEventListener('click', () => {
@@ -262,8 +275,23 @@ function bindCheckout() {
   });
 }
 
+/* ---------- 回到頂部 ---------- */
+function mountToTop() {
+  const b = document.createElement('button');
+  b.className = 'totop';
+  b.type = 'button';
+  b.setAttribute('aria-label', '回到頂部');
+  b.innerHTML = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>';
+  b.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  document.body.appendChild(b);
+  const sync = () => b.classList.toggle('is-on', window.scrollY > 600);
+  window.addEventListener('scroll', sync, { passive: true });
+  sync();
+}
+
 /* ---------- Boot ---------- */
 renderChrome();
+mountToTop();
 syncCartDot();
 document.addEventListener('cart:change', syncCartDot);
 window.addEventListener('hashchange', route);

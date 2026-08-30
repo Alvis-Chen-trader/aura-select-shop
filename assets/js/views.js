@@ -252,7 +252,12 @@ const View = {
         <div class="sec__head"><h2 class="h2">也許你也會喜歡</h2></div>
         <div class="grid">${PRODUCTS.filter(x => x.id !== p.id).slice(0, 4).map(card).join('')}</div>
       </section>
-    </div>`;
+    </div>
+
+    ${buyable ? `<div class="buybar" id="buybar">
+      <span class="buybar__price"><small>${esc(p.name)}</small><b id="buybarPrice">${fmt(startPrice)}</b></span>
+      <button class="btn btn--primary" id="buybarAdd">加入購物車</button>
+    </div>` : ''}`;
   },
 
   /* ---------------- 購物車 ---------------- */
