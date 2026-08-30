@@ -23,9 +23,15 @@
   --sale:         #BA372A;   /* 特價文字 */
   --sale-bg:      #BA372A;   /* 特價標籤底 */
   --sale-fg:      #FFFFFF;
-  --bar-bg:       #444444;   /* 公告列與頁尾：兩個主題都保持深色 */
+  --bar-bg:       #000000;   /* 公告列：純黑，對齊 thisjulie.com */
   --bar-fg:       #FFFFFF;
   --ok:           #4A6B52;
+  --accent-red:   #D7241A;   /* 主 CTA 按鈕紅 */
+  --icon-red:     #D52319;   /* 導覽列圖標紅 */
+  --ftr-bg:       #F3F4F6;   /* 頁尾淺灰底（對齊 thisjulie） */
+  --ftr-fg:       #1F2937;   /* 頁尾深灰文字 */
+  --ftr-muted:    #6B7280;
+  --ftr-line:     #E5E7EB;
 
   --shadow-sm: 0 1px 2px rgba(68, 68, 68, .07);
   --shadow-md: 0 4px 20px -6px rgba(68, 68, 68, .16);
@@ -65,9 +71,15 @@
     --sale:        #E8917F;
     --sale-bg:     #8E2E22;
     --sale-fg:     #FFF3F0;
-    --bar-bg:      #232120;
+    --bar-bg:      #000000;
     --bar-fg:      #EDEAE5;
     --ok:          #7FA189;
+    --accent-red:  #E8524A;
+    --icon-red:    #E8524A;
+    --ftr-bg:      #1C1B19;
+    --ftr-fg:      #EDEAE5;
+    --ftr-muted:   #ADA79F;
+    --ftr-line:    #2E2C29;
     --shadow-sm: 0 1px 2px rgba(0,0,0,.4);
     --shadow-md: 0 4px 20px -6px rgba(0,0,0,.6);
     --shadow-lg: 0 18px 48px -20px rgba(0,0,0,.7);
@@ -89,9 +101,15 @@
   --sale:        #E8917F;
   --sale-bg:     #8E2E22;
   --sale-fg:     #FFF3F0;
-  --bar-bg:      #232120;
+  --bar-bg:      #000000;
   --bar-fg:      #EDEAE5;
   --ok:          #7FA189;
+  --accent-red:  #E8524A;
+  --icon-red:    #E8524A;
+  --ftr-bg:      #1C1B19;
+  --ftr-fg:      #EDEAE5;
+  --ftr-muted:   #ADA79F;
+  --ftr-line:    #2E2C29;
   --shadow-sm: 0 1px 2px rgba(0,0,0,.4);
   --shadow-md: 0 4px 20px -6px rgba(0,0,0,.6);
   --shadow-lg: 0 18px 48px -20px rgba(0,0,0,.7);
@@ -145,8 +163,8 @@ p { margin: 0 0 1em; }
 }
 .btn:active { transform: translateY(1px); }
 /* 主鈕用墨色。金棕在參考站幾乎只當文字色，大面積鋪開會俗氣。 */
-.btn--primary { background: var(--ink); color: var(--paper); }
-.btn--primary:hover { background: var(--brand-deep); color: #fff; }
+.btn--primary { background: var(--accent-red); color: #fff; border-radius: 12px; font-weight: 700; }
+.btn--primary:hover { background: #B91C1C; color: #fff; }
 .btn--ghost { border-color: var(--line-strong); color: var(--ink); background: transparent; }
 .btn--ghost:hover { border-color: var(--brand); color: var(--brand); }
 .btn--block { display: flex; width: 100%; }
@@ -156,13 +174,12 @@ p { margin: 0 0 1em; }
 /* ---------- 5. Header ---------- */
 .announce {
   background: var(--bar-bg); color: var(--bar-fg);
-  font-size: 11.5px; letter-spacing: .12em; text-align: center; padding: 9px 16px;
+  font-size: 14px; letter-spacing: .12em; text-align: center; padding: 9px 16px;
 }
 .hdr {
   position: sticky; top: 0; z-index: 50;
-  background: color-mix(in srgb, var(--paper) 88%, transparent);
-  backdrop-filter: saturate(1.4) blur(12px);
-  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,.08), 0 2px 4px -2px rgba(0,0,0,.05);
 }
 .hdr__in {
   height: var(--header-h); display: flex; align-items: center; gap: 20px;
@@ -178,9 +195,10 @@ p { margin: 0 0 1em; }
   border: none; background: transparent; border-radius: var(--r-full); position: relative;
 }
 .icon-btn:hover { background: var(--surface-2); }
+.hdr__actions .icon-btn { color: var(--icon-red); }
 .cart-dot {
   position: absolute; top: 4px; right: 3px; min-width: 17px; height: 17px; padding: 0 4px;
-  background: var(--ink); color: var(--paper); border-radius: var(--r-full);
+  background: var(--accent-red); color: #fff; border-radius: var(--r-full);
   font-size: 10px; font-weight: 700; display: grid; place-items: center; line-height: 1;
 }
 .burger { display: none; }
@@ -406,18 +424,18 @@ p { margin: 0 0 1em; }
 .prose li { margin-bottom: 7px; }
 
 /* ---------- 15. Footer ---------- */
-.ftr { background: var(--bar-bg); color: var(--bar-fg); padding: clamp(36px,5vw,60px) 0 26px; margin-top: 40px; }
-.ftr a { color: color-mix(in srgb, var(--bar-fg) 72%, transparent); font-size: 13.5px; }
-.ftr a:hover { color: var(--bar-fg); }
+.ftr { background: var(--ftr-bg); color: var(--ftr-fg); padding: clamp(36px,5vw,60px) 0 26px; margin-top: 40px; border-top: 1px solid var(--ftr-line); }
+.ftr a { color: var(--ftr-muted); font-size: 13.5px; }
+.ftr a:hover { color: var(--ftr-fg); text-decoration: underline; }
 .ftr__grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: clamp(20px,3vw,40px); }
 @media (max-width: 780px) { .ftr__grid { grid-template-columns: 1fr 1fr; } }
-.ftr h4 { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; margin-bottom: 14px; color: color-mix(in srgb, var(--bar-fg) 60%, transparent); font-family: var(--sans); font-weight: 700; }
+.ftr h4 { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; margin-bottom: 14px; color: var(--ftr-fg); font-family: var(--sans); font-weight: 900; }
 .ftr ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 9px; }
-.ftr__brand p { color: color-mix(in srgb, var(--bar-fg) 65%, transparent); font-size: 13.5px; max-width: 34ch; }
+.ftr__brand p { color: var(--ftr-muted); font-size: 13.5px; max-width: 34ch; }
 .ftr__bottom {
-  border-top: 1px solid color-mix(in srgb, var(--bar-fg) 16%, transparent);
+  border-top: 1px solid var(--ftr-line);
   margin-top: 34px; padding-top: 18px; display: flex; justify-content: space-between;
-  gap: 14px; flex-wrap: wrap; font-size: 12px; color: color-mix(in srgb, var(--bar-fg) 55%, transparent);
+  gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--ftr-muted);
 }
 
 /* ---------- 16. Motion ---------- */

@@ -61,7 +61,7 @@ const View = {
       </div>
       <div class="hero__art">
         <span class="hero__badge">本月主打 · 限時 ${Math.round((1 - hero.price / hero.compareAt) * 100)}% OFF</span>
-        <img src="${IMG('hero.svg')}" alt="${esc(hero.name)}" width="800" height="1000" style="width:100%;height:100%;object-fit:cover">
+        <img src="${IMG('hero.png')}" alt="${esc(hero.name)}" width="800" height="1000" style="width:100%;height:100%;object-fit:cover">
       </div>
     </section>
 
@@ -118,7 +118,7 @@ const View = {
           <p class="lede" style="margin-top:14px;white-space:pre-line">${esc(COPY.aboutBody)}</p>
           <a class="btn btn--ghost" href="#/about" style="margin-top:10px">更多關於我們</a>
         </div>
-        <div class="split__art"><img src="${IMG('about.svg')}" alt="選品理念" style="width:100%;height:100%;object-fit:cover"></div>
+        <div class="split__art"><img src="${IMG('about.png')}" alt="選品理念" style="width:100%;height:100%;object-fit:cover"></div>
       </div>
     </section>`;
   },
@@ -444,7 +444,7 @@ const View = {
           <h1 class="h2">${esc(COPY.aboutTitle)}</h1>
           <p class="lede" style="margin-top:16px;white-space:pre-line">${esc(COPY.aboutBody)}</p>
         </div>
-        <div class="split__art"><img src="${IMG('about.svg')}" alt="選品理念" style="width:100%;height:100%;object-fit:cover"></div>
+        <div class="split__art"><img src="${IMG('about.png')}" alt="選品理念" style="width:100%;height:100%;object-fit:cover"></div>
       </section>
       <section class="sec sec--alt" style="margin-inline:calc(var(--gut) * -1)">
         <div class="wrap"><div class="values">

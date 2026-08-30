@@ -47,7 +47,7 @@ const PRODUCTS = [
     compareAt: 780,
     badge: '本月主打',
     status: 'onsale',
-    images: ['mask-1.svg', 'mask-2.svg', 'mask-3.svg', 'mask-4.svg'],
+    images: ['mask-1.png', 'mask-2.svg', 'mask-3.svg', 'mask-4.svg'],
     short: '五層水潤配方、25ml 大容量精華，敷完不黏、不需再洗。乾燥換季、熬夜後的急救款。',
     bullets: [
       '添加三種分子量玻尿酸，兼顧表層與長效保濕',
