@@ -23,6 +23,25 @@ node scripts/build-single.js   # 產出 dist/aura-shop.html
 
 ---
 
+## 放到網路上（最快的方式）
+
+repo 是 public，用 GitHub Pages 免費、不用註冊任何服務：
+
+1. repo 頁面 → **Settings** → 左側 **Pages**
+2. **Source** 選 `Deploy from a branch`
+3. **Branch** 選 `main`，資料夾選 `/ (root)` → **Save**
+4. 等一到兩分鐘，網址會是
+   `https://alvis-chen-trader.github.io/aura-select-shop/`
+
+之後每次 push 到 `main` 都會自動更新。
+
+`robots.txt` 目前設為不讓搜尋引擎收錄（樣板階段）。正式上線時把它改掉。
+
+想接自訂網域或要 PR 預覽網址，改用 Cloudflare Pages / Vercel，見
+[`docs/OPERATIONS.md`](docs/OPERATIONS.md)。
+
+---
+
 ## 檔案在哪
 
 ```

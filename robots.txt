@@ -1,0 +1,7 @@
+# 這是還沒上線的樣板站，先不讓搜尋引擎收錄。
+# 正式上線時把下面兩行刪掉，改成：
+#   User-agent: *
+#   Allow: /
+#   Sitemap: https://你的網域/sitemap.xml
+User-agent: *
+Disallow: /
