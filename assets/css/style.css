@@ -225,7 +225,9 @@ p { margin: 0 0 1em; }
 }
 .hero__art {
   position: relative; border-radius: var(--r-lg); overflow: hidden;
-  box-shadow: var(--shadow-lg); aspect-ratio: 4 / 5; background: var(--surface-2);
+  /* 比例要跟 assets/img 的照片一致，否則 object-fit:cover 會把圖裁掉。
+     目前的商品照都是 1024x1024，所以這裡是 1/1。換成直式照片時記得一起改。 */
+  box-shadow: var(--shadow-lg); aspect-ratio: 1 / 1; background: var(--surface-2);
 }
 .hero__badge {
   position: absolute; left: 18px; top: 18px; background: var(--surface); color: var(--ink);
@@ -413,7 +415,7 @@ p { margin: 0 0 1em; }
 
 .split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px,5vw,60px); align-items: center; }
 @media (max-width: 820px) { .split { grid-template-columns: 1fr; } }
-.split__art { border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 5/4; box-shadow: var(--shadow-md); background: var(--surface-2); }
+.split__art { border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 1/1; box-shadow: var(--shadow-md); background: var(--surface-2); }
 
 .crumb { font-size: 12px; color: var(--ink-3); padding: 18px 0 0; }
 .crumb a:hover { color: var(--brand); }
