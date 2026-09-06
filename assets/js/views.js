@@ -38,6 +38,134 @@ function card(p) {
   </a>`;
 }
 
+/* ============================================================
+   商品介紹長圖文
+   版面照抄 daydayskincare.com 的面膜商品頁（SHOPLINE ultra_chic）：
+   原站整段是 2 張長圖，這裡把圖裡的區塊順序、圖文比例與上下留白
+   還原成 HTML。區塊順序：
+     1 主視覺（置中英文 eyebrow → 中文標語 → 商品照）
+     2 情境照（右側直排標語）＋ 三欄重點（壓在照片下緣的白卡）
+     3 成分（標題＋膠囊標籤＋圈點圖說＋兩欄細目）
+     4 深色交錯圖文（圖 42% / 文 45%，左右交錯並上下錯位）
+     5 膜布（同 3 的圈點圖說 ＋ 底部宣告條）
+     6 使用步驟（虛線時間軸，文字右對齊，右半出血照片）
+     7 全成分（雙色膠囊 ＋ 置中成分表）
+     8 收尾商品照 ＋ 品牌宣言
+     9 落款（一句話 ＋ 品牌記號 ＋ 製造與注意事項）
+   內容全部來自 data.js 的 p.intro，這裡只負責排版。
+   ============================================================ */
+const introTitle = o =>
+  `<h3 class="intro__h"><span>${esc(o.titleLight)}</span><b>${esc(o.titleBold)}</b></h3>`;
+
+/* 圈點圖說：中央一張圖，四周 3 個標註，虛線引線用 CSS 畫。 */
+const introMarks = o => `
+  <div class="intro__marks">
+    <div class="intro__marks-art"><img src="${IMG(o.img)}" alt="" loading="lazy" width="700" height="700"></div>
+    ${o.marks.map((m, i) => `<figure class="intro__mark intro__mark--${i + 1}">
+      <b>${esc(m.t)}</b><span>${esc(m.d)}</span>
+    </figure>`).join('')}
+  </div>`;
+
+function introView(p) {
+  const notes = `<ul class="intro__notes">${p.notes.map(n => `<li>${esc(n)}</li>`).join('')}</ul>`;
+  const x = p.intro;
+
+  // 沒有長圖文的商品維持原本的短文排版
+  if (!x) return `
+    <p style="white-space:pre-line">${esc(p.story)}</p>
+    <h4>使用注意事項</h4>
+    <ul class="prose" style="padding-left:20px;color:var(--ink-2)">${p.notes.map(n => `<li>${esc(n)}</li>`).join('')}</ul>`;
+
+  return `
+  <div class="intro">
+
+    <section class="intro__hero">
+      <p class="intro__en">${x.hero.en.map(l => esc(l)).join('<br>')}</p>
+      <p class="intro__zh">${esc(x.hero.zh)}</p>
+      <div class="intro__shot"><img src="${IMG(x.hero.img)}" alt="${esc(p.name)}" loading="lazy" width="900" height="900"></div>
+    </section>
+
+    <section class="intro__life">
+      <div class="intro__life-art">
+        <img src="${IMG(x.life.img)}" alt="" loading="lazy" width="1000" height="1000">
+        <p class="intro__vert">${esc(x.life.side)}</p>
+      </div>
+      <div class="intro__stats">
+        ${x.life.stats.map(s => `<div><b>${esc(s.t)}</b><span>${esc(s.d)}</span></div>`).join('')}
+      </div>
+    </section>
+
+    <section class="intro__band">
+      ${introTitle(x.focus)}
+      <p class="intro__pillrow"><span class="intro__pill">${esc(x.focus.pill)}</span></p>
+      ${introMarks(x.focus)}
+      <dl class="intro__rows">
+        ${x.focus.rows.map(r => `<div>
+          <dt>${esc(r.zh)}<em>${esc(r.en)}</em></dt>
+          <dd>${esc(r.d)}</dd>
+        </div>`).join('')}
+      </dl>
+    </section>
+
+    <section class="intro__band intro__band--dark">
+      ${introTitle(x.keys)}
+      <p class="intro__pillrow"><span class="intro__pill intro__pill--line">${esc(x.keys.eyebrow)}</span></p>
+      <div class="intro__keys">
+        ${x.keys.rows.map(r => `<article class="intro__key">
+          <div class="intro__key-art"><img src="${IMG(r.img)}" alt="" loading="lazy" width="600" height="600"></div>
+          <div class="intro__key-txt">
+            <p class="intro__kicker">${esc(r.kicker)}</p>
+            <p class="intro__ken">${esc(r.en)}</p>
+            <p class="intro__kd">${esc(r.d)}</p>
+          </div>
+        </article>`).join('')}
+      </div>
+    </section>
+
+    <section class="intro__band">
+      ${introTitle(x.material)}
+      <p class="intro__pillrow"><span class="intro__pill">${x.material.pill.map(s => esc(s)).join('<i>|</i>')}</span></p>
+      ${introMarks(x.material)}
+      <p class="intro__strip">${esc(x.material.strip)}</p>
+    </section>
+
+    <section class="intro__steps">
+      ${introTitle(x.steps)}
+      <p class="intro__pillrow"><span class="intro__pill">${esc(x.steps.pill)}</span></p>
+      <div class="intro__steps-body">
+        <ol class="intro__timeline">
+          ${x.steps.items.map(s => `<li><b>${esc(s.t)}</b><span>${esc(s.d)}</span></li>`).join('')}
+        </ol>
+        <div class="intro__steps-art"><img src="${IMG(x.steps.img)}" alt="" loading="lazy" width="800" height="1000"></div>
+      </div>
+    </section>
+
+    <section class="intro__ing">
+      <p class="intro__pillrow">
+        <span class="intro__pill intro__pill--duo">
+          <b>${esc(x.ingredientsPill[0])}</b><i>${esc(x.ingredientsPill[1])}</i>
+        </span>
+      </p>
+      <p class="intro__inglist">${esc(p.ingredients)}</p>
+    </section>
+
+    <section class="intro__closing">
+      <div class="intro__shot"><img src="${IMG(x.closing.img)}" alt="${esc(p.name)}" loading="lazy" width="900" height="900"></div>
+      <p class="intro__lead">${esc(x.closing.lead)}</p>
+      <p class="intro__statement">${esc(p.story)}</p>
+    </section>
+
+    <section class="intro__sign">
+      <p class="intro__quote">${esc(x.sign.quote)}</p>
+      <p class="intro__sigil">${esc(x.sign.mark)}</p>
+      <p class="intro__fine">${x.sign.lines.map(l => esc(l)).join('<br>')}</p>
+      <h4 class="intro__noteh">使用注意事項</h4>
+      ${notes}
+    </section>
+
+  </div>`;
+}
+
 const View = {
   /* ---------------- 首頁 ---------------- */
   home() {
@@ -215,10 +343,8 @@ const View = {
           ${p.reviews.length ? '<button data-tab="rev">顧客評價</button>' : ''}
         </div>
 
-        <div class="tabpanel" data-panel="story">
-          <p style="white-space:pre-line">${esc(p.story)}</p>
-          <h4>使用注意事項</h4>
-          <ul class="prose" style="padding-left:20px;color:var(--ink-2)">${p.notes.map(n => `<li>${esc(n)}</li>`).join('')}</ul>
+        <div class="tabpanel${p.intro ? ' tabpanel--intro' : ''}" data-panel="story">
+          ${introView(p)}
         </div>
         <div class="tabpanel hide" data-panel="how">
           <ol style="padding-left:20px;color:var(--ink-2)">${p.how.map(h => `<li style="margin-bottom:8px">${esc(h)}</li>`).join('')}</ol>
