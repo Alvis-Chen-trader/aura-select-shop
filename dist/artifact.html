@@ -228,7 +228,9 @@ p { margin: 0 0 1em; }
 }
 .hero__art {
   position: relative; border-radius: var(--r-lg); overflow: hidden;
-  box-shadow: var(--shadow-lg); aspect-ratio: 4 / 5; background: var(--surface-2);
+  /* 比例要跟 assets/img 的照片一致，否則 object-fit:cover 會把圖裁掉。
+     目前的商品照都是 1024x1024，所以這裡是 1/1。換成直式照片時記得一起改。 */
+  box-shadow: var(--shadow-lg); aspect-ratio: 1 / 1; background: var(--surface-2);
 }
 .hero__badge {
   position: absolute; left: 18px; top: 18px; background: var(--surface); color: var(--ink);
@@ -416,7 +418,7 @@ p { margin: 0 0 1em; }
 
 .split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px,5vw,60px); align-items: center; }
 @media (max-width: 820px) { .split { grid-template-columns: 1fr; } }
-.split__art { border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 5/4; box-shadow: var(--shadow-md); background: var(--surface-2); }
+.split__art { border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 1/1; box-shadow: var(--shadow-md); background: var(--surface-2); }
 
 .crumb { font-size: 12px; color: var(--ink-3); padding: 18px 0 0; }
 .crumb a:hover { color: var(--brand); }
@@ -475,6 +477,227 @@ p { margin: 0 0 1em; }
 .totop:hover { color: var(--brand); border-color: var(--brand); }
 .totop.is-on { opacity: 1; pointer-events: auto; transform: none; }
 @media (max-width: 880px) { .totop { bottom: 88px; } }
+
+/* ---------- 19. 商品介紹長圖文（版面照抄 daydayskincare.com 面膜商品頁） ----------
+   原站那段「商品描述」整段是 2 張長圖（1000px 寬，合計約 11000px 高），
+   版面全畫在圖裡。這裡把量到的比例還原成 HTML：
+     · 內容欄寬 = 區塊寬的 82.8%（左右各留 8.6%）→ --pad-i
+     · 深色區交錯圖文：圖 42% / 文 45% / 中間留白 13%
+     · 區塊之間的留白約為欄寬的 15–20% → --pad-b
+   字級沒有等比放大：原圖標題約為欄寬的 4.6%，照搬會與本站 body 14px
+   的節奏打架，因此壓到 clamp(21px, 3.2vw, 34px)，維持大小關係不變。
+   顏色一律走既有 token（深色區用 --bar-bg／--bar-fg，強調用 --accent-red），
+   深色模式因此自動同步。 */
+.tabpanel--intro { max-width: none; padding: 0; }
+
+.intro {
+  --pad-b: clamp(46px, 7vw, 92px);   /* 區塊上下留白 */
+  --pad-i: clamp(18px, 7vw, 112px);  /* 區塊左右留白 ≒ 欄寬 8.6% */
+  --bleed: calc(var(--gut) * -1);    /* 抵銷 .wrap 的側邊留白，讓底色滿到邊 */
+  text-align: center;
+  line-height: 1.9;
+}
+.intro > section { padding-block: var(--pad-b); padding-inline: var(--pad-i); }
+
+.intro__h { font-size: clamp(21px, 3.2vw, 34px); letter-spacing: .08em; font-weight: 600; margin: 0; }
+.intro__h span { color: var(--ink-2); font-weight: 400; }
+.intro__h b { font-weight: 700; margin-left: .35em; }
+
+.intro__pillrow { margin: 14px 0 0; }
+.intro__pill {
+  display: inline-flex; align-items: center; gap: .8em;
+  border: 1px solid var(--line-strong); border-radius: var(--r-full);
+  padding: 7px 20px; font-size: 12.5px; letter-spacing: .14em; color: var(--ink-2);
+}
+.intro__pill i { font-style: normal; color: var(--ink-3); }
+
+/* 1 主視覺 */
+.intro__en {
+  font-family: var(--serif); font-size: clamp(15px, 2vw, 22px);
+  letter-spacing: .3em; line-height: 1.7; margin: 0 0 16px;
+}
+.intro__zh {
+  font-family: var(--serif); font-size: clamp(18px, 2.6vw, 26px);
+  letter-spacing: .18em; margin: 0 0 clamp(26px, 4vw, 50px);
+}
+.intro__shot {
+  max-width: 52%; margin-inline: auto; overflow: hidden; border-radius: var(--r-md);
+  background: linear-gradient(180deg, var(--surface-2), var(--paper));
+}
+.intro__shot img { width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; }
+
+/* 2 情境照 ＋ 三欄重點 */
+.intro > .intro__life { padding-inline: 0; margin-inline: var(--bleed); }   /* 情境照滿版：要贏過 .intro > section 的側邊留白 */
+.intro__life-art { position: relative; }
+.intro__life-art img { width: 100%; height: auto; aspect-ratio: 1 / 1.05; object-fit: cover; }
+.intro__vert {
+  position: absolute; top: 11%; right: 6%; margin: 0;
+  writing-mode: vertical-rl; white-space: nowrap;
+  /* 直排必須自己列出中文襯線字體：Unna 沒有中文字，webfont 沒載到時
+     （單檔版離線開、或擋掉 Google Fonts）逐字回退在直排下會算不出字高，
+     整句會疊成一團。橫排不受影響，所以只有這一行需要補。 */
+  font-family: "Noto Serif TC", "Noto Serif CJK TC", "Source Han Serif TC",
+               "Songti TC", PMingLiU, var(--serif);
+  font-size: clamp(14px, 1.9vw, 20px); letter-spacing: .22em; color: var(--ink);
+}
+.intro__stats {
+  position: relative; width: 84%; margin: -46px auto 0;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md);
+  box-shadow: var(--shadow-md); padding-block: clamp(14px, 2vw, 22px);
+}
+.intro__stats div { padding: 6px 12px; }
+.intro__stats div + div { border-left: 1px solid var(--line); }
+.intro__stats b { display: block; font-family: var(--serif); font-size: clamp(14px, 1.8vw, 18px); letter-spacing: .08em; }
+.intro__stats span { display: block; font-size: 12px; color: var(--ink-2); margin-top: 2px; }
+
+/* 底色滿版區塊 */
+.intro__band { background: var(--surface-2); margin-inline: var(--bleed); }
+.intro__band--dark { background: var(--bar-bg); color: var(--bar-fg); }
+.intro__band--dark .intro__h span { color: color-mix(in srgb, var(--bar-fg) 66%, transparent); }
+.intro__pill--line {
+  border-color: color-mix(in srgb, var(--bar-fg) 42%, transparent);
+  color: var(--bar-fg); font-family: var(--serif); letter-spacing: .2em;
+}
+
+/* 3 / 5 圈點圖說 */
+.intro__marks { position: relative; margin-top: clamp(28px, 4.5vw, 56px); }
+.intro__marks-art { width: 46%; margin-inline: auto; }
+.intro__marks-art img { width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: contain; }
+.intro__mark { position: absolute; width: 30%; margin: 0; }
+.intro__mark b { display: block; font-family: var(--serif); font-size: clamp(14px, 1.8vw, 18px); letter-spacing: .06em; }
+.intro__mark span { display: block; font-size: 12.5px; color: var(--ink-2); margin-top: 2px; line-height: 1.7; }
+.intro__mark::after {                       /* 指向圖片的虛線引線 */
+  content: ""; position: absolute; top: calc(100% + 10px);
+  width: 58%; border-top: 1px dashed var(--line-strong);
+}
+.intro__mark--1 { left: 0; top: 10%; text-align: left; }
+.intro__mark--1::after { left: 6%; }
+.intro__mark--2 { right: 0; top: 30%; text-align: right; }
+.intro__mark--2::after { right: 6%; }
+.intro__mark--3 { left: 0; top: 62%; text-align: left; }
+.intro__mark--3::after { left: 6%; }
+
+/* 3 兩欄細目 */
+.intro__rows { margin: clamp(30px, 5vw, 62px) 0 0; text-align: left; }
+.intro__rows > div {
+  display: grid; grid-template-columns: 1fr 1.15fr; gap: clamp(16px, 3vw, 42px);
+  padding: 16px 0; border-top: 1px solid var(--line-strong);
+}
+.intro__rows dt { font-weight: 700; }
+.intro__rows em {
+  display: block; font-family: var(--serif); font-style: italic; font-weight: 400;
+  font-size: 14.5px; letter-spacing: .04em; color: var(--ink-2); margin-top: 1px;
+}
+.intro__rows dd { margin: 0; color: var(--ink-2); }
+
+/* 4 深色交錯圖文 */
+.intro__keys { display: grid; gap: clamp(30px, 5vw, 66px); margin-top: clamp(30px, 5vw, 58px); }
+.intro__key { display: grid; grid-template-columns: 45% 42%; gap: 13%; align-items: center; }
+.intro__key-art { border-radius: 18px; overflow: hidden; }
+.intro__key-art img { width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; }
+.intro__key:nth-child(odd) .intro__key-txt { order: 1; text-align: right; }
+.intro__key:nth-child(odd) .intro__key-art { order: 2; }
+.intro__key:nth-child(even) { grid-template-columns: 42% 45%; }
+.intro__key:nth-child(even) .intro__key-txt { text-align: left; }
+.intro__kicker { margin: 0; font-size: 13px; letter-spacing: .06em; color: color-mix(in srgb, var(--bar-fg) 76%, transparent); }
+.intro__ken {
+  font-family: var(--serif); font-style: italic; font-weight: 700;
+  font-size: clamp(20px, 2.8vw, 30px); letter-spacing: .02em;
+  color: var(--accent-red); margin: 2px 0 10px;
+}
+.intro__kd { margin: 0; font-size: 13.5px; line-height: 2; color: color-mix(in srgb, var(--bar-fg) 80%, transparent); }
+
+/* 5 膜布宣告條 */
+.intro__strip {
+  margin: clamp(28px, 4.5vw, 54px) calc(var(--pad-i) * -1) calc(var(--pad-b) * -1);
+  padding: 16px var(--pad-i); background: var(--line);
+  font-size: 13.5px; letter-spacing: .1em; color: var(--ink);
+}
+
+/* 6 使用步驟時間軸 */
+.intro__steps-body {
+  display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 4vw, 56px);
+  align-items: start; margin-top: clamp(28px, 4.5vw, 54px);
+}
+.intro__timeline {
+  --tl: clamp(16px, 3vw, 40px);
+  list-style: none; margin: 0; padding: 8px var(--tl) 8px 0;
+  text-align: right; border-right: 1px dashed var(--line-strong);
+  display: grid; gap: clamp(30px, 5vw, 66px);
+}
+.intro__timeline li { position: relative; }
+.intro__timeline li::after {
+  content: ""; position: absolute; top: 8px; right: calc((var(--tl) + 5px) * -1);
+  width: 11px; height: 11px; background: var(--paper); border: 1px solid var(--line-strong);
+}
+.intro__timeline b {
+  display: block; font-family: var(--serif); font-size: clamp(17px, 2.4vw, 24px);
+  letter-spacing: .12em; color: var(--ink-2); font-weight: 400;
+}
+.intro__timeline span { display: block; margin-top: 4px; font-size: 13px; color: var(--ink-2); white-space: pre-line; }
+.intro__steps-art { margin-right: var(--bleed); }
+.intro__steps-art img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--r-md) 0 0 var(--r-md); }
+
+/* 7 全成分 */
+.intro__pill--duo { border: none; padding: 0; gap: 0; }
+.intro__pill--duo b {
+  background: var(--ink-2); color: var(--paper); font-weight: 600;
+  padding: 7px 18px; border-radius: var(--r-full) 0 0 var(--r-full); letter-spacing: .14em;
+}
+.intro__pill--duo i {
+  font-style: normal; font-family: var(--serif); letter-spacing: .14em;
+  padding: 7px 18px; border: 1px solid var(--line-strong); border-left: none;
+  border-radius: 0 var(--r-full) var(--r-full) 0;
+}
+.intro__inglist {
+  max-width: 54ch; margin: clamp(22px, 3.5vw, 40px) auto 0;
+  font-size: 13px; line-height: 2.1; color: var(--ink-2); white-space: pre-line;
+}
+
+/* 8 收尾商品照 ＋ 品牌宣言 */
+.intro__closing .intro__shot { max-width: 46%; }
+.intro__lead {
+  font-family: var(--serif); font-size: clamp(15px, 2vw, 20px);
+  letter-spacing: .12em; color: var(--ink-2); margin: clamp(24px, 4vw, 46px) 0 14px;
+}
+.intro__statement { max-width: 42ch; margin: 0 auto; color: var(--ink-2); line-height: 2.1; white-space: pre-line; }
+
+/* 9 落款 */
+.intro__sign { border-top: 1px solid var(--line); }
+.intro__quote { margin: 0; font-family: var(--serif); font-size: clamp(15px, 2vw, 19px); letter-spacing: .12em; color: var(--ink-2); }
+.intro__sigil {
+  font-family: var(--serif); font-size: 40px; letter-spacing: .1em;
+  color: var(--ink-3); margin: clamp(20px, 3vw, 38px) 0;
+}
+.intro__fine { margin: 0; font-size: 12.5px; line-height: 2; color: var(--ink-3); }
+.intro__noteh { font-size: 14px; margin: clamp(26px, 4vw, 46px) 0 10px; }
+.intro__notes { list-style: none; padding: 0; margin: 0; font-size: 12.5px; line-height: 2; color: var(--ink-3); }
+
+@media (max-width: 880px) {
+  .intro__key { grid-template-columns: 1fr; gap: 16px; }
+  .intro__key:nth-child(odd) .intro__key-txt,
+  .intro__key:nth-child(even) .intro__key-txt { order: 2; text-align: center; }
+  .intro__key:nth-child(odd) .intro__key-art { order: 1; }
+  .intro__steps-body { grid-template-columns: 1fr; }
+  .intro__timeline { border-right: none; padding-right: 0; text-align: center; }
+  .intro__timeline li::after { display: none; }
+  .intro__steps-art { margin-right: 0; }
+  .intro__steps-art img { border-radius: var(--r-md); }
+  .intro__rows > div { grid-template-columns: 1fr; gap: 4px; }
+}
+@media (max-width: 820px) {
+  .intro__marks-art { width: 74%; }
+  .intro__mark { position: static; width: 100%; text-align: center; margin-top: 20px; }
+  .intro__mark--1, .intro__mark--2, .intro__mark--3 { text-align: center; }
+  .intro__mark::after { display: none; }
+  .intro__shot, .intro__closing .intro__shot { max-width: 74%; }
+}
+@media (max-width: 560px) {
+  .intro__stats { width: 100%; grid-template-columns: 1fr; margin-top: -28px; }
+  .intro__stats div + div { border-left: none; border-top: 1px solid var(--line); }
+  .intro__vert { top: 6%; right: 5%; }
+}
 
 </style>
 <a class="sr" href="#app">跳到主要內容</a>
@@ -555,6 +778,87 @@ const PRODUCTS = [
       '保存期限': '未開封 3 年，效期標示於外盒側面',
       '保存方式': '避免高溫與陽光直射，開封後請一次用畢',
       '適用膚質': '一般 / 乾性 / 混合性；敏感肌建議先局部測試',
+    },
+    /* 商品介紹長圖文（版面照抄 daydayskincare.com 的面膜商品頁：
+       主視覺 → 情境照＋三欄重點 → 成分圈點 → 深色交錯圖文 → 膜布圈點
+       → 使用步驟時間軸 → 全成分 → 收尾商品照 → 品牌落款）
+       文案改這裡就好，不要動 views.js。 */
+    intro: {
+      hero: {
+        img: 'mask-1.png',
+        en: ['FOR YOUR', 'EVERYDAY RITUAL'],
+        zh: '日日值得　好好對待',
+      },
+      life: {
+        img: 'about.png',
+        side: '每一天　都對自己好一點',
+        stats: [
+          { t: '深層保濕', d: '三種分子量玻尿酸' },
+          { t: '敷後柔嫩', d: '神經醯胺 NP' },
+          { t: '服貼不悶', d: '天絲纖維膜布' },
+        ],
+      },
+      focus: {
+        img: 'mask-2.svg',
+        titleLight: '玻尿酸配方',
+        titleBold: '讓肌膚喝飽水',
+        pill: '三種分子量玻尿酸',
+        marks: [
+          { t: '滋潤舒緩', d: '敷後不緊繃、不刺激' },
+          { t: '長效保濕', d: '表層與長效一起顧' },
+          { t: '柔嫩觸感', d: '隔天摸起來是軟的' },
+        ],
+        rows: [
+          { zh: '三重玻尿酸', en: 'Triple Hyaluronic', d: '大、中、小分子一起用，兼顧表層水潤與長效保濕' },
+          { zh: '溫和配方', en: 'Gentle Formula', d: '無酒精、無香精、無色素，敏感肌可先局部試用' },
+        ],
+      },
+      keys: {
+        eyebrow: 'KEYS of AURA',
+        titleLight: '敷完的隔天',
+        titleBold: '比較好上妝',
+        rows: [
+          { kicker: '深層保濕 × 長效鎖水', en: 'Hydrating', d: '精華稍微帶點稠度，敷完在臉上留一層薄膜感，但不黏手。', img: 'mask-3.svg' },
+          { kicker: '溫和配方 × 無香精無酒精', en: 'Gentle', d: '無酒精、無香精、無色素。敏感肌第一次使用，建議先塗於耳後觀察一天。', img: 'mask-4.svg' },
+          { kicker: '天絲膜布 × 細緻貼合', en: 'Fitting', d: '膜布服貼下顎與鼻翼，低頭滑手機也不容易滑落。', img: 'mask-2.svg' },
+        ],
+      },
+      material: {
+        img: 'mask-3.svg',
+        titleLight: '天絲膜布',
+        titleBold: '輕薄服貼',
+        pill: ['無香精', '無酒精', '無色素'],
+        marks: [
+          { t: '極緻服貼', d: '細緻貼合，鼻翼與下顎不留空隙' },
+          { t: '透氣不悶', d: '敷感輕盈，像第二層肌膚' },
+          { t: '親膚不刺激', d: '觸感柔和、低摩擦' },
+        ],
+        strip: '無香精、無酒精、無色素配方　敏感肌建議先局部試用',
+      },
+      steps: {
+        img: 'about.png',
+        titleLight: '輕盈一敷',
+        titleBold: '肌膚喝飽水',
+        pill: '日常保養步驟',
+        items: [
+          { t: 'STEP 1', d: '洗淨臉部肌膚' },
+          { t: 'STEP 2', d: '將面膜輕輕貼合面部' },
+          { t: 'STEP 3', d: '靜待 15–20 分鐘\n讓精華充分吸收' },
+        ],
+      },
+      ingredientsPill: ['全成分', 'Ingredients'],
+      closing: {
+        img: 'mask-1.png',
+        lead: 'AURA，為不想將就的日常保養而生。',
+      },
+      sign: {
+        quote: '每天一點，剛剛好；每天一點，就能更好',
+        mark: 'A',
+        lines: [
+          '本產品於台灣製造，可提供檢驗報告',
+          '並已投保產品責任險',
+        ],
+      },
     },
     story:
       '換季那陣子我臉頰乾到會脫皮，擦什麼都刺。試過十幾款面膜之後留下這一款——它的精華液不是水水的那種，是稍微有點稠度、敷完會在臉上留一層薄膜感，但不黏。早上起來摸臉是軟的，妝也比較服貼。\n\n我自己的用法是：不當每日保養，而是當「補水」用。連續熬夜三天、剛從冷氣房出來、或是隔天要拍照的前一晚，才拿出來敷。',
@@ -812,6 +1116,134 @@ function card(p) {
   </a>`;
 }
 
+/* ============================================================
+   商品介紹長圖文
+   版面照抄 daydayskincare.com 的面膜商品頁（SHOPLINE ultra_chic）：
+   原站整段是 2 張長圖，這裡把圖裡的區塊順序、圖文比例與上下留白
+   還原成 HTML。區塊順序：
+     1 主視覺（置中英文 eyebrow → 中文標語 → 商品照）
+     2 情境照（右側直排標語）＋ 三欄重點（壓在照片下緣的白卡）
+     3 成分（標題＋膠囊標籤＋圈點圖說＋兩欄細目）
+     4 深色交錯圖文（圖 42% / 文 45%，左右交錯並上下錯位）
+     5 膜布（同 3 的圈點圖說 ＋ 底部宣告條）
+     6 使用步驟（虛線時間軸，文字右對齊，右半出血照片）
+     7 全成分（雙色膠囊 ＋ 置中成分表）
+     8 收尾商品照 ＋ 品牌宣言
+     9 落款（一句話 ＋ 品牌記號 ＋ 製造與注意事項）
+   內容全部來自 data.js 的 p.intro，這裡只負責排版。
+   ============================================================ */
+const introTitle = o =>
+  `<h3 class="intro__h"><span>${esc(o.titleLight)}</span><b>${esc(o.titleBold)}</b></h3>`;
+
+/* 圈點圖說：中央一張圖，四周 3 個標註，虛線引線用 CSS 畫。 */
+const introMarks = o => `
+  <div class="intro__marks">
+    <div class="intro__marks-art"><img src="${IMG(o.img)}" alt="" loading="lazy" width="700" height="700"></div>
+    ${o.marks.map((m, i) => `<figure class="intro__mark intro__mark--${i + 1}">
+      <b>${esc(m.t)}</b><span>${esc(m.d)}</span>
+    </figure>`).join('')}
+  </div>`;
+
+function introView(p) {
+  const notes = `<ul class="intro__notes">${p.notes.map(n => `<li>${esc(n)}</li>`).join('')}</ul>`;
+  const x = p.intro;
+
+  // 沒有長圖文的商品維持原本的短文排版
+  if (!x) return `
+    <p style="white-space:pre-line">${esc(p.story)}</p>
+    <h4>使用注意事項</h4>
+    <ul class="prose" style="padding-left:20px;color:var(--ink-2)">${p.notes.map(n => `<li>${esc(n)}</li>`).join('')}</ul>`;
+
+  return `
+  <div class="intro">
+
+    <section class="intro__hero">
+      <p class="intro__en">${x.hero.en.map(l => esc(l)).join('<br>')}</p>
+      <p class="intro__zh">${esc(x.hero.zh)}</p>
+      <div class="intro__shot"><img src="${IMG(x.hero.img)}" alt="${esc(p.name)}" loading="lazy" width="900" height="900"></div>
+    </section>
+
+    <section class="intro__life">
+      <div class="intro__life-art">
+        <img src="${IMG(x.life.img)}" alt="" loading="lazy" width="1000" height="1000">
+        <p class="intro__vert">${esc(x.life.side)}</p>
+      </div>
+      <div class="intro__stats">
+        ${x.life.stats.map(s => `<div><b>${esc(s.t)}</b><span>${esc(s.d)}</span></div>`).join('')}
+      </div>
+    </section>
+
+    <section class="intro__band">
+      ${introTitle(x.focus)}
+      <p class="intro__pillrow"><span class="intro__pill">${esc(x.focus.pill)}</span></p>
+      ${introMarks(x.focus)}
+      <dl class="intro__rows">
+        ${x.focus.rows.map(r => `<div>
+          <dt>${esc(r.zh)}<em>${esc(r.en)}</em></dt>
+          <dd>${esc(r.d)}</dd>
+        </div>`).join('')}
+      </dl>
+    </section>
+
+    <section class="intro__band intro__band--dark">
+      ${introTitle(x.keys)}
+      <p class="intro__pillrow"><span class="intro__pill intro__pill--line">${esc(x.keys.eyebrow)}</span></p>
+      <div class="intro__keys">
+        ${x.keys.rows.map(r => `<article class="intro__key">
+          <div class="intro__key-art"><img src="${IMG(r.img)}" alt="" loading="lazy" width="600" height="600"></div>
+          <div class="intro__key-txt">
+            <p class="intro__kicker">${esc(r.kicker)}</p>
+            <p class="intro__ken">${esc(r.en)}</p>
+            <p class="intro__kd">${esc(r.d)}</p>
+          </div>
+        </article>`).join('')}
+      </div>
+    </section>
+
+    <section class="intro__band">
+      ${introTitle(x.material)}
+      <p class="intro__pillrow"><span class="intro__pill">${x.material.pill.map(s => esc(s)).join('<i>|</i>')}</span></p>
+      ${introMarks(x.material)}
+      <p class="intro__strip">${esc(x.material.strip)}</p>
+    </section>
+
+    <section class="intro__steps">
+      ${introTitle(x.steps)}
+      <p class="intro__pillrow"><span class="intro__pill">${esc(x.steps.pill)}</span></p>
+      <div class="intro__steps-body">
+        <ol class="intro__timeline">
+          ${x.steps.items.map(s => `<li><b>${esc(s.t)}</b><span>${esc(s.d)}</span></li>`).join('')}
+        </ol>
+        <div class="intro__steps-art"><img src="${IMG(x.steps.img)}" alt="" loading="lazy" width="800" height="1000"></div>
+      </div>
+    </section>
+
+    <section class="intro__ing">
+      <p class="intro__pillrow">
+        <span class="intro__pill intro__pill--duo">
+          <b>${esc(x.ingredientsPill[0])}</b><i>${esc(x.ingredientsPill[1])}</i>
+        </span>
+      </p>
+      <p class="intro__inglist">${esc(p.ingredients)}</p>
+    </section>
+
+    <section class="intro__closing">
+      <div class="intro__shot"><img src="${IMG(x.closing.img)}" alt="${esc(p.name)}" loading="lazy" width="900" height="900"></div>
+      <p class="intro__lead">${esc(x.closing.lead)}</p>
+      <p class="intro__statement">${esc(p.story)}</p>
+    </section>
+
+    <section class="intro__sign">
+      <p class="intro__quote">${esc(x.sign.quote)}</p>
+      <p class="intro__sigil">${esc(x.sign.mark)}</p>
+      <p class="intro__fine">${x.sign.lines.map(l => esc(l)).join('<br>')}</p>
+      <h4 class="intro__noteh">使用注意事項</h4>
+      ${notes}
+    </section>
+
+  </div>`;
+}
+
 const View = {
   /* ---------------- 首頁 ---------------- */
   home() {
@@ -989,10 +1421,8 @@ const View = {
           ${p.reviews.length ? '<button data-tab="rev">顧客評價</button>' : ''}
         </div>
 
-        <div class="tabpanel" data-panel="story">
-          <p style="white-space:pre-line">${esc(p.story)}</p>
-          <h4>使用注意事項</h4>
-          <ul class="prose" style="padding-left:20px;color:var(--ink-2)">${p.notes.map(n => `<li>${esc(n)}</li>`).join('')}</ul>
+        <div class="tabpanel${p.intro ? ' tabpanel--intro' : ''}" data-panel="story">
+          ${introView(p)}
         </div>
         <div class="tabpanel hide" data-panel="how">
           <ol style="padding-left:20px;color:var(--ink-2)">${p.how.map(h => `<li style="margin-bottom:8px">${esc(h)}</li>`).join('')}</ol>
