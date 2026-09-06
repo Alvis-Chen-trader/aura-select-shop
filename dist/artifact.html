@@ -165,7 +165,8 @@ p { margin: 0 0 1em; }
   text-align: center; white-space: nowrap;
 }
 .btn:active { transform: translateY(1px); }
-/* 主鈕用墨色。金棕在參考站幾乎只當文字色，大面積鋪開會俗氣。 */
+/* 主鈕用 --accent-red。金棕 --brand 留給文字強調（價格、eyebrow、連結），
+   不要拿去填按鈕。改配色前請先讀 CLAUDE.md 的「目前配色」。 */
 .btn--primary { background: var(--accent-red); color: #fff; border-radius: 12px; font-weight: 700; }
 .btn--primary:hover { background: #B91C1C; color: #fff; }
 .btn--ghost { border-color: var(--line-strong); color: var(--ink); background: transparent; }
